@@ -1,5 +1,3 @@
-# phil.beer
-
 
                               .sssssssss.
                         .sssssssssssssssssss
