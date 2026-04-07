@@ -1,34 +1,44 @@
 <!doctype html>
 <html lang="en">
 <head>
-<link rel="icon" href="/favicon.ico" type="image/x-icon">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PHIL</title>
-
-<style>
-html, body {
-  height: 100%;
-  margin: 0;
-  background: white;
-}
-
-body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: Helvetica, Arial, sans-serif;
-}
-
-h1 {
-  font-size: 30vw; /* very large and responsive */
-  margin: 0;
-  color: black;
-}
-</style>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PHIL</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            background: white;
+        }
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Helvetica, Arial, sans-serif;
+        }
+        h1 {
+            font-size: 30vw;
+            margin: 0;
+            color: black;
+        }
+        /* Link moved to the top left */
+        .projects-link {
+            position: absolute;
+            top: 20px; /* Changed from bottom to top */
+            left: 20px;
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .projects-link:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
-
 <body>
-<h1>PHILL</h1>
+    <h1>PHIL</h1>
+    <a href="https://projects.phil.beer" class="projects-link">Projects</a>
 </body>
 </html>
