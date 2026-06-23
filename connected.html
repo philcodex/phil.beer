@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>You're connected — SuirSignal Guest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:    #1A0F00;
+      --amber:  #C47A1E;
+      --cream:  #F5E6C8;
+      --mid:    #2C1A0A;
+      --muted:  #8C6A3F;
+      --glass:  rgba(196, 122, 30, 0.12);
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--ink);
+      color: var(--cream);
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem 1.5rem;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Ambient background glow */
+    body::before {
+      content: '';
+      position: fixed;
+      bottom: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(196,122,30,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Bubbles */
+    .bubbles {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .bubble {
+      position: absolute;
+      bottom: -20px;
+      border-radius: 50%;
+      background: rgba(196, 122, 30, 0.15);
+      border: 1px solid rgba(196, 122, 30, 0.25);
+      animation: rise linear forwards;
+    }
+
+    @keyframes rise {
+      0%   { transform: translateY(0) scale(1);   opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 0.6; }
+      100% { transform: translateY(-110vh) scale(0.8); opacity: 0; }
+    }
+
+    /* Card */
+    .card {
+      position: relative;
+      z-index: 10;
+      background: var(--mid);
+      border: 1px solid rgba(196,122,30,0.3);
+      border-radius: 16px;
+      padding: 3rem 2.5rem 2.5rem;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 0 60px rgba(196,122,30,0.08), 0 20px 40px rgba(0,0,0,0.4);
+      animation: fadeUp 0.6s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Icon */
+    .icon-wrap {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 1.75rem;
+      border-radius: 50%;
+      background: var(--glass);
+      border: 1px solid rgba(196,122,30,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: popIn 0.5s 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.5); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    .icon-wrap svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    /* Heading */
+    h1 {
+      font-family: 'Fraunces', serif;
+      font-size: 2rem;
+      font-weight: 600;
+      line-height: 1.15;
+      color: var(--cream);
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+
+    h1 em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--amber);
+    }
+
+    .sub {
+      font-size: 0.9375rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    /* Divider */
+    .divider {
+      width: 40px;
+      height: 1px;
+      background: rgba(196,122,30,0.3);
+      margin: 0 auto 2rem;
+    }
+
+    /* Network pill */
+    .network-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--glass);
+      border: 1px solid rgba(196,122,30,0.25);
+      border-radius: 999px;
+      padding: 0.4rem 1rem;
+      font-size: 0.8125rem;
+      color: var(--amber);
+      letter-spacing: 0.03em;
+      margin-bottom: 2rem;
+    }
+
+    .network-pill .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #4ade80;
+      box-shadow: 0 0 6px #4ade80;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* Footer note */
+    .footer-note {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      line-height: 1.5;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(196,122,30,0.1);
+    }
+
+    .footer-note a {
+      color: var(--amber);
+      text-decoration: none;
+    }
+
+    .footer-note a:hover {
+      text-decoration: underline;
+    }
+
+    /* Branding */
+    .brand {
+      margin-top: 2rem;
+      font-size: 0.75rem;
+      color: rgba(140,106,63,0.5);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .bubble, .card, .icon-wrap { animation: none; }
+    }
+
+    @media (max-width: 480px) {
+      .card { padding: 2.25rem 1.5rem 2rem; }
+      h1 { font-size: 1.65rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bubbles" id="bubbles"></div>
+
+  <div class="card">
+    <div class="icon-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#C47A1E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12.55a11 11 0 0 1 14.08 0"/>
+        <path d="M1.42 9a16 16 0 0 1 21.16 0"/>
+        <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
+        <circle cx="12" cy="20" r="1" fill="#C47A1E" stroke="none"/>
+      </svg>
+    </div>
+
+    <h1>You're <em>connected</em></h1>
+    <p class="sub">Welcome to SuirSignal Guest.<br>You now have access to the internet.</p>
+
+    <div class="divider"></div>
+
+    <div class="network-pill">
+      <span class="dot"></span>
+      SuirSignal-Guest
+    </div>
+
+    
+  </div>
+
+  <p class="brand">phil.beer</p>
+
+  <script>
+    // Spawn rising bubbles on load
+    const container = document.getElementById('bubbles');
+    const count = 18;
+
+    for (let i = 0; i < count; i++) {
+      const b = document.createElement('div');
+      b.className = 'bubble';
+      const size = Math.random() * 14 + 6;
+      const left = Math.random() * 100;
+      const delay = Math.random() * 4;
+      const duration = Math.random() * 6 + 5;
+      b.style.cssText = `
+        width: ${size}px;
+        height: ${size}px;
+        left: ${left}%;
+        animation-duration: ${duration}s;
+        animation-delay: ${delay}s;
+      `;
+      container.appendChild(b);
+    }
+  </script>
+
+</body>
+</html>

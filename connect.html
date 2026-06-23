@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SuirSignal Guest Wi-Fi</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:    #1A0F00;
+      --amber:  #C47A1E;
+      --cream:  #F5E6C8;
+      --mid:    #2C1A0A;
+      --muted:  #8C6A3F;
+      --border: rgba(196,122,30,0.25);
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--ink);
+      color: var(--cream);
+      font-family: system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem 1.25rem;
+    }
+
+    /* Ambient glow */
+    body::before {
+      content: '';
+      position: fixed;
+      bottom: -10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 500px;
+      height: 300px;
+      background: radial-gradient(ellipse, rgba(196,122,30,0.14) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .card {
+      position: relative;
+      background: var(--mid);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.75rem 2.25rem 2.25rem;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* Pint glass SVG mark */
+    .glass-mark {
+      width: 48px;
+      height: 56px;
+      margin: 0 auto 1.75rem;
+    }
+
+    /* Network label */
+    .network-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1.25rem;
+    }
+
+    .network-label .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--amber);
+    }
+
+    h1 {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 1.75rem;
+      font-weight: normal;
+      line-height: 1.2;
+      color: var(--cream);
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.01em;
+    }
+
+    .tagline {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+      line-height: 1.5;
+    }
+
+    /* Terms box */
+    .terms-box {
+      background: rgba(0,0,0,0.25);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.125rem;
+      font-size: 0.8125rem;
+      color: var(--muted);
+      line-height: 1.65;
+      text-align: left;
+      margin-bottom: 1.5rem;
+    }
+
+    .terms-box p + p {
+      margin-top: 0.5rem;
+    }
+
+    /* Checkbox row */
+    .accept-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      text-align: left;
+      margin-bottom: 1.5rem;
+      cursor: pointer;
+    }
+
+    .accept-row input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      border: 1.5px solid var(--muted);
+      border-radius: 4px;
+      background: transparent;
+      cursor: pointer;
+      margin-top: 1px;
+      position: relative;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .accept-row input[type="checkbox"]:checked {
+      background: var(--amber);
+      border-color: var(--amber);
+    }
+
+    .accept-row input[type="checkbox"]:checked::after {
+      content: '';
+      position: absolute;
+      left: 4px;
+      top: 1px;
+      width: 6px;
+      height: 10px;
+      border: 2px solid var(--ink);
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg);
+    }
+
+    .accept-row label {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      line-height: 1.5;
+      cursor: pointer;
+    }
+
+    /* Connect button */
+    .btn-connect {
+      display: block;
+      width: 100%;
+      padding: 0.85rem;
+      background: var(--amber);
+      color: var(--ink);
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+      letter-spacing: 0.01em;
+    }
+
+    .btn-connect:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .btn-connect:not(:disabled):hover {
+      opacity: 0.9;
+    }
+
+    .btn-connect:not(:disabled):active {
+      transform: scale(0.98);
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 1.5rem;
+      font-size: 0.75rem;
+      color: rgba(140,106,63,0.45);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 420px) {
+      .card { padding: 2rem 1.25rem 1.75rem; }
+      h1 { font-size: 1.5rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+
+    <!-- Pint glass SVG — no external assets, loads offline -->
+    <svg class="glass-mark" viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- Glass body -->
+      <path d="M8 4 L6 52 L42 52 L40 4 Z" stroke="#C47A1E" stroke-width="1.5" stroke-linejoin="round" fill="rgba(196,122,30,0.06)"/>
+      <!-- Foam top -->
+      <path d="M9 10 Q14 7 19 10 Q24 13 29 10 Q34 7 39 10" stroke="#F5E6C8" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+      <!-- Liquid fill line -->
+      <line x1="7.5" y1="16" x2="40.5" y2="16" stroke="rgba(196,122,30,0.3)" stroke-width="1" stroke-dasharray="3 3"/>
+      <!-- Handle -->
+      <path d="M40 18 Q52 18 52 28 Q52 38 40 38" stroke="#C47A1E" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    </svg>
+
+    <div class="network-label">
+      <span class="dot"></span>
+      SuirSignal-Guest
+    </div>
+
+    <h1>Guest Wi-Fi</h1>
+    <p class="tagline">Free internet access. Just accept the terms below to get online.</p>
+
+    <div class="terms-box">
+      <p>This network is provided for personal internet access. Please use it responsibly.</p>
+      <p>Do not use this connection for illegal activity, excessive downloading, or anything that would harm others on the network.</p>
+      <p>Your session may be monitored for network security purposes. By connecting you agree to these conditions.</p>
+    </div>
+
+    <label class="accept-row">
+      <input type="checkbox" id="terms-check" onchange="toggleBtn()">
+      <span>I have read and agree to the terms of use</span>
+    </label>
+
+    <button class="btn-connect" id="connect-btn" disabled onclick="goConnect()">
+      Connect to internet
+    </button>
+
+  </div>
+
+  <p class="footer">phil.beer</p>
+
+  <script>
+    function toggleBtn() {
+      const cb = document.getElementById('terms-check');
+      const btn = document.getElementById('connect-btn');
+      btn.disabled = !cb.checked;
+    }
+
+    function goConnect() {
+      const btn = document.getElementById('connect-btn');
+      btn.textContent = 'Connecting…';
+      btn.disabled = true;
+      // Small delay feels more natural, then redirect to success page
+      setTimeout(function() {
+        window.location.href = 'https://phil.beer/connected';
+      }, 800);
+    }
+  </script>
+
+</body>
+</html>
